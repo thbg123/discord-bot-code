@@ -1,18 +1,13 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const client = new Discord.Client();
-const alexa = require("alexa-bot-api");
-var chatbot = new alexa("aw2plm");
 
-client.once("ready", () => {
-  console.log("ChatBot online!");
+client.once('ready', () => {
+  console.log('Ready!');
 });
 
-client.on("message", async message => {
-  if (message.author.bot) return;
-  let content = message.content;
-  if(!content) return;
-  const reply = await chatbot.getReply(content);
-  await message.channel.send(reply);
+client.on('message', async message => {
+  // Join the same voice channel of the author of the message
+  if (message.member.voice.channel) {
+    const connection = await message.member.voice.channel.join();
+  }
 });
-
-client.login(process.env.token);
